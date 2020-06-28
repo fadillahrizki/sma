@@ -1,0 +1,32 @@
+#banner{
+    height:200px;
+    background-position: center;
+    background-size: cover;
+    background-image:url("https://matabanua.co.id/wp-content/uploads/2019/08/hal-9-2-klmv-07082019-1024x538.jpg");
+}
+
+#text-print{
+    display: none;
+}
+
+@media print{
+    body  {
+        visibility: hidden;
+    }
+
+    #text-print{
+        display: block;
+    }
+
+    #print {
+        visibility: visible;
+        position: fixed;
+        top:0;
+        left:0;
+        width: 100%;
+    }
+
+    #print table th:last-child, table td:last-child{
+        display: none;
+    }
+}
