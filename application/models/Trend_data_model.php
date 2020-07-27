@@ -16,7 +16,21 @@ class Trend_data_model extends CI_Model{
     }
 
     function prediksi(){
-        return $this->db->order_by('tahun desc, bulan_val desc')->get($this->tbl)->result();
+        $query = $this->db->query("
+            SELECT 
+                o.id,o.bulan,o.tahun,
+                o.stok_awal,o.stok_sisa,
+                o.jumlah_terjual,
+                (Select avg(jumlah_terjual) FROM trend_data i WHERE i.id < o.id AND i.id >= (o.id - 3) having count(*) >= 3 ) AS MovingAverage FROM trend_data o ORDER BY o.tahun ASC, o.bulan_val ASC
+        ");
+        return $query->result();
+        // return $this->db->order_by('tahun asc, bulan_val asc')->get($this->tbl)->result();
+    }
+
+    function next_period(){
+        $query = $this->db->query("SELECT AVG(jumlah_terjual) as sma FROM (SELECT jumlah_terjual FROM trend_data order by tahun desc, bulan_val desc LIMIT 0, 3) trend_data");
+        return $query->result();
+        // return $this->db->order_by('tahun asc, bulan_val asc')->get($this->tbl)->result();
     }
 
     function insert($data){

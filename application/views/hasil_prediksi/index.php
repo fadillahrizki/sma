@@ -3,11 +3,12 @@
         <div class="col-12">
             <div class="py-3 d-flex justify-content-between text-light">
               <h3>Data Prediksi</h3>
+              <a href="/hasil_prediksi/cetak" class="btn btn-success"><i class="fa fa-print"></i> Cetak</a>
             </div>
-            <div class="form-inline py-3">
+            <!-- <div class="form-inline py-3">
               <input type="number" class="form-control mr-3" id="periode">
               <button class="btn btn-success" onclick="prediksi()">Prediksi</button>
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -26,15 +27,57 @@
                   <th>Stok Awal</th>
                   <th>Stok Sisa</th>
                   <th>Jumlah Terjual</th>
-                  <th>Aksi</th>
+                  <th>Forecasting</th>
+                  <th>MAE</th>
+                  <th>MAD</th>
+                  <th>MSE</th>
                 </tr>
               </thead>
               <tbody>
+                <?php 
+                $total_mad = 0;
+                $total_mse = 0;
+                foreach ($data as $key => $value): 
+                  $mae = $value->jumlah_terjual-$value->MovingAverage;
+                  $mad = abs($mae);
+                  $mse = $mad*$mad;
+
+                  $total_mad += $mad;
+                  $total_mse += $mse;
+                ?>
                 <tr>
-                  <td colspan="8" class="text-center">Tidak ada data!</td>
-                </tr>
+                  <td><?=++$key?></td>
+                  <td><?=$value->bulan?></td>
+                  <td><?=$value->tahun?></td>
+                  <td><?=$value->stok_awal?></td>
+                  <td><?=$value->stok_sisa?></td>
+                  <td><?=$value->jumlah_terjual?></td>
+                  <td><?=$value->MovingAverage ? $value->MovingAverage : 0?></td>
+                  <td><?=$mae?></td>
+                  <td><?=$mad?></td>
+                  <td><?=$mse?></td>
+                </tr>  
+                <?php endforeach ?>
+                <tr>
+                  <td></td>
+                  <td><b>Periode Selanjutnya</b></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><?=$next_period[0]->sma ?></td>
+                  <td></td>
+                  <td><?= $total_mad / (count($data)-3) ?></td>
+                  <td><?= $total_mse / (count($data)-3) ?></td>
+                </tr> 
               </tbody>
             </table>
+
+            <div class="text-light">
+            <h4>Hasil Peramalan persediaan telur pada periode selanjutnya adalah <?=$next_period[0]->sma ?></h4>
+            <h5>MAD : <?= $total_mad / (count($data)-3) ?></h5>
+            <h5>MSE : <?= $total_mse / (count($data)-3) ?></h5>
+            </div>
         </div>
     </div>
 
