@@ -25,6 +25,7 @@ $bulan = [
                     <h5>Edit data Trend</h5>
                     <form action="/trend_data/update" method="post">
                         <input type="hidden" name="id" value="<?=$trend_data->id?>">
+                        <input type="hidden" name="stok_sisa" value="0">
                         <div class="form-group">
                             <label>Bulan</label>
                             <select name="bulan" class="form-control">
@@ -45,10 +46,10 @@ $bulan = [
                             <label>Stok Awal</label>
                             <input type="number" name="stok_awal" value="<?=$trend_data->stok_awal?>" class="form-control" required>
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label>Stok Sisa</label>
                             <input type="number" name="stok_sisa" value="<?=$trend_data->stok_sisa?>" class="form-control" required>
-                        </div>
+                        </div> -->
                         <div class="form-group">
                             <label>Tanggal</label>
                             <input type="date" name="tanggal" value="<?=$trend_data->tanggal?>" class="form-control" required>

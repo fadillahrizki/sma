@@ -25,37 +25,50 @@
                   <th>Bulan</th>
                   <th>Tahun</th>
                   <th>Stok Awal</th>
-                  <th>Stok Sisa</th>
+                  <!-- <th>Stok Sisa</th> -->
                   <th>Jumlah Terjual</th>
                   <th>Forecasting</th>
-                  <th>MAE</th>
+                  <!-- <th>MAE</th> -->
                   <th>MAD</th>
                   <th>MSE</th>
+                  <th>MAPE</th>
                 </tr>
               </thead>
               <tbody>
                 <?php 
                 $total_mad = 0;
                 $total_mse = 0;
+                $total_mape = 0;
                 foreach ($data as $key => $value): 
-                  $mae = $value->jumlah_terjual-$value->MovingAverage;
-                  $mad = abs($mae);
-                  $mse = $mad*$mad;
+                  $mae = 0;
+                  $mad = 0;
+                  $mse = 0;
+                  $mape = 0;
+                  if($key > 2)
+                  {
+                    $mae = $value->jumlah_terjual-$value->MovingAverage;
+                    $mad = abs($mae);
+                    $mse = $mad*$mad;
+                    $mape = $mad/$value->jumlah_terjual*100;
+                    $mape = round($mape,1);
 
-                  $total_mad += $mad;
-                  $total_mse += $mse;
+                    $total_mad += $mad;
+                    $total_mse += $mse;
+                    $total_mape += $mape;
+                  }
                 ?>
                 <tr>
                   <td><?=++$key?></td>
                   <td><?=$value->bulan?></td>
                   <td><?=$value->tahun?></td>
                   <td><?=$value->stok_awal?></td>
-                  <td><?=$value->stok_sisa?></td>
+                  <!-- <td><?=$value->stok_sisa?></td> -->
                   <td><?=$value->jumlah_terjual?></td>
                   <td><?=$value->MovingAverage ? $value->MovingAverage : 0?></td>
-                  <td><?=$mae?></td>
+                  <!-- <td><?=$mae?></td> -->
                   <td><?=$mad?></td>
                   <td><?=$mse?></td>
+                  <td><?=$mape?></td>
                 </tr>  
                 <?php endforeach ?>
                 <tr>
@@ -64,19 +77,21 @@
                   <td></td>
                   <td></td>
                   <td></td>
-                  <td></td>
+                  <!-- <td></td> -->
                   <td><?=$next_period[0]->sma ?></td>
-                  <td></td>
-                  <td><?= $total_mad / (count($data)-3) ?></td>
-                  <td><?= $total_mse / (count($data)-3) ?></td>
+                  <!-- <td></td> -->
+                  <td><?= round($total_mad / (count($data)-3),1) ?></td>
+                  <td><?= round($total_mse / (count($data)-3),1) ?></td>
+                  <td><?= round($total_mape / (count($data)-3),1) ?></td>
                 </tr> 
               </tbody>
             </table>
 
             <div class="text-light">
             <h4>Hasil Peramalan persediaan telur pada periode selanjutnya adalah <?=$next_period[0]->sma ?></h4>
-            <h5>MAD : <?= $total_mad / (count($data)-3) ?></h5>
-            <h5>MSE : <?= $total_mse / (count($data)-3) ?></h5>
+            <h5>MAD : <?= round($total_mad / (count($data)-3),1) ?></h5>
+            <h5>MSE : <?= round($total_mse / (count($data)-3),1) ?></h5>
+            <h5>MAPE : <?= round($total_mape / (count($data)-3),1) ?></h5>
             </div>
         </div>
     </div>
