@@ -24,7 +24,6 @@ $bulan = [
                 <div class="card-body">
                     <h5>Tambah data Trend</h5>
                     <form action="/trend_data/insert" method="post">
-                        <input type="hidden" name="stok_sisa" value="0">
                         <div class="form-group">
                             <label>Bulan</label>
                             <select name="bulan" class="form-control">
@@ -41,9 +40,10 @@ $bulan = [
                             <label>Stok Awal</label>
                             <input type="number" name="stok_awal" class="form-control" required>
                         </div>
-                        <!-- <div class="form-group">
+                        <div class="form-group">
                             <label>Stok Sisa</label>
-                        </div> -->
+                            <input type="text" name="stok_sisa" value="0">
+                        </div>
                         <div class="form-group">
                             <label>Tanggal</label>
                             <input type="date" name="tanggal" class="form-control" required>

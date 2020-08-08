@@ -12,7 +12,7 @@
                   <th>Bulan</th>
                   <th>Tahun</th>
                   <th>Stok Awal</th>
-                  <!-- <th>Stok Sisa</th> -->
+                  <th>Stok Sisa</th>
                   <th>Jumlah Terjual</th>
                   <th>Forecasting</th>
                   <!-- <th>MAE</th> -->
@@ -49,9 +49,9 @@
                   <td><?=$value->bulan?></td>
                   <td><?=$value->tahun?></td>
                   <td><?=$value->stok_awal?></td>
-                  <!-- <td><?=$value->stok_sisa?></td> -->
+                  <td><?=$value->stok_sisa?></td>
                   <td><?=$value->jumlah_terjual?></td>
-                  <td><?=$value->MovingAverage ? $value->MovingAverage : 0?></td>
+                  <td><?=$value->MovingAverage ? round($value->MovingAverage,1) : 0?></td>
                   <!-- <td><?=$mae?></td> -->
                   <td><?=$mad?></td>
                   <td><?=$mse?></td>
@@ -64,8 +64,8 @@
                   <td></td>
                   <td></td>
                   <td></td>
-                  <!-- <td></td> -->
-                  <td><?=$next_period[0]->sma ?></td>
+                  <td></td>
+                  <td><?=round($next_period[0]->sma,1) ?></td>
                   <!-- <td></td> -->
                   <td><?= round($total_mad / (count($data)-3),1) ?></td>
                   <td><?= round($total_mse / (count($data)-3),1) ?></td>
@@ -74,7 +74,7 @@
               </tbody>
             </table>
 
-            <h4>Hasil Peramalan persediaan telur pada periode selanjutnya adalah <?=$next_period[0]->sma ?></h4>
+            <h4>Hasil Peramalan persediaan telur pada periode selanjutnya adalah <?=round($next_period[0]->sma,1) ?></h4>
             <h5>MAD : <?= round($total_mad / (count($data)-3),1) ?></h5>
             <h5>MSE : <?= round($total_mse / (count($data)-3),1) ?></h5>
             <h5>MAPE : <?= round($total_mape / (count($data)-3),1) ?></h5>
