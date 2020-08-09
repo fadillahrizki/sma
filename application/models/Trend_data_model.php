@@ -17,11 +17,7 @@ class Trend_data_model extends CI_Model{
 
     function prediksi(){
         $query = $this->db->query("
-            SELECT 
-                o.id,o.bulan,o.tahun,
-                o.stok_awal,o.stok_sisa,
-                o.jumlah_terjual,
-                (Select avg(jumlah_terjual) FROM trend_data i WHERE i.id < o.id AND i.id >= (o.id - 3) having count(*) >= 3 ) AS MovingAverage FROM trend_data o ORDER BY o.tahun ASC, o.bulan_val ASC
+            SELECT * FROM trend_data o ORDER BY o.tahun ASC, o.bulan_val ASC
         ");
         return $query->result();
         // return $this->db->order_by('tahun asc, bulan_val asc')->get($this->tbl)->result();
