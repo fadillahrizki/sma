@@ -44,17 +44,17 @@
 
                     $MovingAverage = $MovingAverage / 3;
 
-                    $mae = $value->jumlah_terjual-$MovingAverage;
+                    $mae = $value->stok_awal-$MovingAverage;
                     $mad = abs($mae);
                     $mse = $mad*$mad;
-                    $mape = $mad/$value->jumlah_terjual*100;
+                    $mape = $mad/$value->stok_awal*100;
                     $mape = round($mape,1);
 
                     $total_mad += $mad;
                     $total_mse += $mse;
                     $total_mape += $mape;
                   }
-                  $forcasting[] = $value->jumlah_terjual;
+                  $forcasting[] = $value->stok_awal;
                 ?>
                 <tr>
                   <td><?=++$key?></td>
