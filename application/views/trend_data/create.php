@@ -42,7 +42,7 @@ $bulan = [
                         </div>
                         <div class="form-group">
                             <label>Stok Sisa</label>
-                            <input type="text" name="stok_sisa" value="0">
+                            <input type="text" name="stok_sisa" class="form-control" value="0">
                         </div>
                         <div class="form-group">
                             <label>Tanggal</label>
