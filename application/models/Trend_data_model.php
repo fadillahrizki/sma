@@ -24,7 +24,7 @@ class Trend_data_model extends CI_Model{
     }
 
     function next_period(){
-        $query = $this->db->query("SELECT AVG(jumlah_terjual) as sma FROM (SELECT jumlah_terjual FROM trend_data order by tahun desc, bulan_val desc LIMIT 0, 3) trend_data");
+        $query = $this->db->query("SELECT AVG(stok_awal) as sma FROM (SELECT stok_awal FROM trend_data order by tahun desc, bulan_val desc LIMIT 0, 3) trend_data");
         return $query->result();
         // return $this->db->order_by('tahun asc, bulan_val asc')->get($this->tbl)->result();
     }
